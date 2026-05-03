@@ -96,3 +96,22 @@ delete from Bookings where showtime_id = 4;
 delete from Showtimes where showtime_id = 4;
 delete from Movies where movie_id = 3;
 
+-- 3/5
+-- 1. Liệt kê các bộ phim có thời lượng từ 90 đến 120 phút 
+select * from Movies where duration_minutes >= 90 and duration_minutes <= 120;
+
+-- 2. Giám đốc muốn biết danh sách khách đặt vé của riêng lịch chiếu có id = 2. 
+-- Hãy in ra các vé này và sắp xếp theo ngày đặt mới nhất lên đầu. 
+select * from Bookings where showtime_id = 2 order by booking_date desc;
+
+-- 3. Lấy danh sách các phim giới hạn độ tuổi 18 
+-- HOẶC những phim có thời lượng dài hơn 150 phút. 
+select * from Movies where age_restriction = 18 or duration_minutes >= 150;
+
+-- 4. Tìm những Lịch chiếu có giá vé lớn hơn 100.000 và được chiếu trong tháng hiện tại 
+select * from Showtimes 
+inner join Bookings on Showtimes.showtime_id = Bookings.showtime_id
+where 
+	Showtimes.ticket_price >= 100000 
+	and month(bookings.booking_date) = month(current_date())
+    and year(bookings.booking_date) = year(current_date());
